@@ -24,44 +24,56 @@ std::vector<int> conjuntos(const std::string& posicao, std::vector<int> vetor) {
 
     return vetor;
 }
-std::vector<int> intersection(const std::vector<int>& vetor1, const std::vector<int>& vetor2){
 
-    std::vector<int> vetorIntersection;
+std::vector<int> intersection(std::vector<std::vector<int>> &vectors) {
+    std::vector<int> result;
 
-    // Seleciona o vetor com o menor tamanho
-    std::vector<int> vetor_menor;
-    std::vector<int> vetor_maior;
-    if (vetor1.size() < vetor2.size()) {
-        vetor_menor = vetor1;
-        vetor_maior = vetor2;
-    } else {
-        vetor_menor = vetor2;
-        vetor_maior = vetor1;
+    if (vectors.size() == 0) {
+        return result;
     }
 
-    for(int i = 0; i<vetor_menor.size();i++){
-        for(int j = 0; j<vetor_maior.size(); j++){
-            if(vetor_menor[i] == vetor_maior[j]){
-                vetorIntersection.push_back(vetor_menor[i]);
+    std::vector<int> firstVector = vectors[0];
+
+    for (int i = 0; i < firstVector.size(); i++) {
+        int currentValue = firstVector[i];
+        int count = 1;
+
+        for (int j = 1; j < vectors.size(); j++) {
+            std::vector<int> currentVector = vectors[j];
+            int found = 0;
+
+            for (int k = 0; k < currentVector.size(); k++) {
+                if (currentVector[k] == currentValue) {
+                    found = 1;
+                    break;
+                }
             }
+
+            if (found) {
+                count++;
+            } else {
+                break;
+            }
+        }
+
+        if (count == vectors.size()) {
+            result.push_back(currentValue);
         }
     }
 
-    return vetorIntersection;
-
+    return result;
 }
 
 int main() {
-    //vetores
-    std::vector<int> vetor1;
-    std::vector<int> vetor2;
 
-    vetor1 = conjuntos("primeiro", vetor1);
-    vetor2 = conjuntos("segundo", vetor2);
+    std::vector<std::vector<int>> vectors = {{1, 2, 3, 4, 5},
+                                             {2, 3, 5, 7},
+                                             {1, 3, 4, 5, 7, 9},
+                                             {3, 5, 8}};
 
-    std::vector<int> vetorIntersection = intersection(vetor1, vetor2);
+    std::vector<int> resultIntersection = intersection(vectors);
 
-    exibeVetor(vetorIntersection);
+    exibeVetor(resultIntersection);
 
     return 0;
 }

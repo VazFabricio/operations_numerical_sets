@@ -7,4 +7,4 @@ include_directories(.)
 
 add_executable(CppProjects
         basics.cpp
-        basics.h)
+        basics.h ../Intervals/intervalsOperations.cpp)

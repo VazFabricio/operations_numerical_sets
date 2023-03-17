@@ -49,9 +49,21 @@ std::vector<int> intersectionSets(std::vector<std::vector<int>> &vectors) {
     return result; // retorna o vetor de intersecção
 }
 
-//std::vector<int> unionSets(std::vector<std::vector<int>> &vectors) {
-//    return;
-//}
+std::vector<int> unionSets(std::vector<std::vector<int>> &vectors) {
+    std::vector<int> result; // vetor que irá armazenar a intersecção dos vetores
+
+    if (vectors.size() == 0) {
+        return result; // se não houver vetores, retorna um vetor vazio
+    }
+
+    std::vector<int> firstVector = vectors[0];
+
+    // percorre todos os valores do primeiro vetor
+    for (int i = 0; i < firstVector.size(); i++) {
+        int currentValue = firstVector[i]; // pega o valor atual
+        int count = 1; // inicializa o contador com 1, porque o valor atual já está no primeiro vetor
+
+}
 
 
 int main() {

@@ -1,3 +1,0 @@
-D:/CppProjects_/setsOperations/cmake-build-debug/CMakeFiles/CppProjects.dir
-D:/CppProjects_/setsOperations/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/CppProjects_/setsOperations/cmake-build-debug/CMakeFiles/rebuild_cache.dir

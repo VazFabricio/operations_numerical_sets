@@ -1,5 +1,6 @@
 #include "iostream"
 #include <vector>
+#include <chrono>
 
 void exibeVetor(std::vector<int> vetor){
     for (int i = 0; i < vetor.size(); i++) {
@@ -79,22 +80,44 @@ std::vector<int> unionSets(std::vector<std::vector<int>> &vectors) {
     return result;
 }
 
-
+std::vector<int> subtractionSets(std::vector<std::vector<int>> &vectors){
+    //faz a subtração pela ordem dos vetores
+    std::vector<int> result = vectors[0]; // inicializa o resultado com o primeiro conjunto
+    for(int i=1; i<vectors.size(); i++){ // itera a partir do segundo conjunto
+        std::vector<int> &vec = vectors[i];
+        for(int j=0; j<vec.size(); j++){ // itera através dos elementos do conjunto atual
+            //auto it = std::find(result.begin(), result.end(), vec[j]); // procura o elemento atual no resultado
+            if(it != result.end()){ // se o elemento está presente no resultado
+                result.erase(it); // remove o elemento do resultado
+            }
+        }
+    }
+    return result;
+}
 
 int main() {
+
+    auto start_time = std::chrono::high_resolution_clock::now();
 
     std::vector<std::vector<int>> vectors = {{1, 2, 3, 4, 5},
                                              {2, 3, 5, 7},
                                              {1, 3, 4, 5, 7, 9},
-                                             {3, 5, 8}};
+                                             {3, 5, 8},
+                                             {1, 3, 1, 5, 7, 9},
+                                             {14, 3, 4, 10, 5, 9},
+                                             {223, 3, 69, 29, 7, 9},
+                                             {1, -5, 21, 3, 7, 9},
+                                             {192, 3, 4, 97, 7, 9},
+                                             {1, 91, 3, 43, 7, 90}};
 
-//    std::vector<int> resultIntersection = intersectionSets(vectors);
-//
-//    exibeVetor(resultIntersection);
+    std::vector<int> resultIntersection = intersectionSets(vectors);
 
-    std::vector<int> resultUnion = unionSets(vectors);
+    exibeVetor(resultIntersection);
 
-    exibeVetor(resultUnion);
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto time_diff = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+
+    std::cout << "Tempo de execucao: " << time_diff.count() << " microssegundos" << std::endl;
 
     return 0;
 }

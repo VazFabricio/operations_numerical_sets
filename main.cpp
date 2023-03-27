@@ -83,14 +83,22 @@ std::vector<int> unionSets(std::vector<std::vector<int>> &vectors) {
 std::vector<int> subtractionSets(std::vector<std::vector<int>> &vectors){
     //faz a subtração pela ordem dos vetores
     std::vector<int> result = vectors[0]; // inicializa o resultado com o primeiro conjunto
+
     for(int i=1; i<vectors.size(); i++){ // itera a partir do segundo conjunto
-        std::vector<int> &vec = vectors[i];
-        for(int j=0; j<vec.size(); j++){ // itera através dos elementos do conjunto atual
-            //auto it = std::find(result.begin(), result.end(), vec[j]); // procura o elemento atual no resultado
-            if(it != result.end()){ // se o elemento está presente no resultado
-                result.erase(it); // remove o elemento do resultado
+        std::vector<int> temp;
+        for(int j=0; j<result.size(); j++){ // itera sobre os elementos em "result"
+            bool found = false;
+            for(int k=0; k<vectors[i].size(); k++){ // verifica se o elemento está presente em "vectors[i]"
+                if(result[j] == vectors[i][k]){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){ // adiciona o elemento em "temp" se ele não estiver presente em "vectors[i]"
+                temp.push_back(result[j]);
             }
         }
+        result = temp; // atualiza "result" com os elementos que estão apenas em "result"
     }
     return result;
 }
@@ -99,7 +107,7 @@ int main() {
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    std::vector<std::vector<int>> vectors = {{1, 2, 3, 4, 5},
+    std::vector<std::vector<int>> vectors = {{1, 2, 3, 4, 5, 20},
                                              {2, 3, 5, 7},
                                              {1, 3, 4, 5, 7, 9},
                                              {3, 5, 8},
@@ -110,14 +118,10 @@ int main() {
                                              {192, 3, 4, 97, 7, 9},
                                              {1, 91, 3, 43, 7, 90}};
 
-    std::vector<int> resultIntersection = intersectionSets(vectors);
+    std::vector<int> subtractionSet = subtractionSets(vectors);
 
-    exibeVetor(resultIntersection);
+    exibeVetor(subtractionSet);
 
-    auto end_time = std::chrono::high_resolution_clock::now();
-    auto time_diff = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
-
-    std::cout << "Tempo de execucao: " << time_diff.count() << " microssegundos" << std::endl;
 
     return 0;
 }
